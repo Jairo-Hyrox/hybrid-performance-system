@@ -50,7 +50,7 @@ export function HowItWorksSection() {
           </FadeIn>
 
           <FadeIn delay={120}>
-            <ViewportVideo src={VIDEOS.outdoor} poster={POSTERS.outdoor} />
+            <ViewportVideo src={VIDEOS.comoFunciona} poster={POSTERS.comoFunciona} />
           </FadeIn>
         </div>
       </div>

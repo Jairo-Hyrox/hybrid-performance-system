@@ -1,6 +1,6 @@
 import { FadeIn } from "@/components/fade-in"
 import { ClickToPlayVideo } from "@/components/click-to-play-video"
-import { VIDEOS, POSTERS } from "@/lib/media"
+import { VIDEOS } from "@/lib/media"
 import { ClipboardCheck, Stethoscope, UserCog, Activity, CalendarClock, Users } from "lucide-react"
 
 const CARDS = [
@@ -28,7 +28,7 @@ export function SolutionSection() {
 
         <FadeIn delay={120}>
           <div className="mt-12">
-            <ClickToPlayVideo src={VIDEOS.metodo} poster={POSTERS.metodo} label="El método, explicado por el coach" />
+            <ClickToPlayVideo src={VIDEOS.laSolucion} label="La solución en acción" />
           </div>
         </FadeIn>
 

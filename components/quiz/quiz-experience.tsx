@@ -260,8 +260,8 @@ function ResultView() {
 
       <div className="mt-8">
         <ClickToPlayVideo
-          src={VIDEOS.metodo}
-          poster={POSTERS.metodo}
+          src={VIDEOS.coach}
+          poster={POSTERS.coach}
           label="El método en 60 segundos"
         />
       </div>
