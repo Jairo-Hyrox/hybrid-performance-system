@@ -1,12 +1,16 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Check } from "lucide-react"
+import { ArrowRight, Check } from "lucide-react"
 import { FadeIn } from "@/components/fade-in"
 import { VIDEOS } from "@/lib/media"
 
 // Experiencia 5 — Confirmación (cierre del funnel). Sin logo de Innovatraining.
 // No lleva CTA a otra página.
+
+// Enlace real de WhatsApp (último paso de conversión del funnel).
+const WHATSAPP_CTA_HREF =
+  "https://wa.me/50763307958?text=Hola%2C%20complet%C3%A9%20mi%20Evaluaci%C3%B3n%20Estrat%C3%A9gica%20y%20quiero%20saber%20como%20agendar%20la%20evaluaci%C3%B3n%20de%20rendimiento."
 
 const CHECKLIST = [
   "Tu situación actual.",
@@ -72,6 +76,19 @@ export function ConfirmacionExperience() {
         {/* VIDEO DE COMUNIDAD */}
         <FadeIn delay={100} className="mt-12 flex justify-center">
           <ComunidadVideo />
+        </FadeIn>
+
+        {/* CTA FINAL — último paso de conversión */}
+        <FadeIn delay={120} className="mt-10 flex justify-center">
+          <a
+            href={WHATSAPP_CTA_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center justify-center gap-2 rounded-lg bg-volt px-8 py-4 font-display text-base font-bold uppercase tracking-widest text-volt-foreground transition-all duration-300 hover:bg-volt-hover hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-volt focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            Agenda Hoy
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </a>
         </FadeIn>
       </div>
     </main>
