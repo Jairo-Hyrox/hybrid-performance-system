@@ -1,10 +1,7 @@
 // Experiencia 3 — Simulación de WhatsApp (Innovatraining).
 //
-// NOTA DE COPY: los archivos de referencia prompts/03-whatsapp.md y
-// copy/copy-completo.md no están presentes en el repositorio. Los textos de
-// abajo son PROVISIONALES y coherentes con la marca. Reemplázalos por los
-// mensajes exactos de copy/copy-completo.md cuando estén disponibles, sin
-// tocar la mecánica del componente.
+// Mensajes EXACTOS del coach (solo burbujas recibidas, sin respuestas del
+// cliente). No modificar los textos.
 //
 // La variable [Nombre] se resuelve en tiempo de render con fallback "atleta".
 
@@ -43,73 +40,48 @@ export type WhatsAppItem =
       label: string
     }
 
-// Secuencia completa: bienvenida + diagnóstico + seguimiento por días.
+// Secuencia de seguimiento (solo mensajes del coach) distribuida por días.
 export const WHATSAPP_SCRIPT: WhatsAppItem[] = [
+  { kind: "day", id: "d1", label: "Día 1" },
   {
     kind: "message",
     id: "m1",
     from: "received",
-    text: "¡Hola [Nombre]! Soy del equipo de Innovatraining 👋",
+    text: "Hola, [Nombre].",
   },
   {
     kind: "message",
     id: "m2",
     from: "received",
-    text: "Vi que completaste tu diagnóstico. Ya tenemos claro por dónde empezar.",
-  },
-  {
-    kind: "message",
-    id: "m3",
-    from: "received",
-    text: "Tu entrenamiento tiene base, pero le falta estructura y seguimiento. Eso es exactamente lo que trabaja el Hybrid Performance System™.",
-  },
-  {
-    kind: "message",
-    id: "m4",
-    from: "sent",
-    text: "Suena bien, ¿cómo funciona?",
-  },
-  {
-    kind: "message",
-    id: "m5",
-    from: "received",
-    text: "Simple: un plan personalizado, revisiones cada semana y medición real de tu progreso. Nada de rutinas genéricas.",
-  },
-
-  { kind: "day", id: "d1", label: "Día 1" },
-  {
-    kind: "message",
-    id: "m6",
-    from: "received",
-    text: "[Nombre], hoy arrancamos con tu evaluación inicial. Registramos tu punto de partida para poder medir cada avance.",
-  },
-  {
-    kind: "message",
-    id: "m7",
-    from: "sent",
-    text: "Perfecto, listo para empezar.",
+    text: "Antes de cerrar tu proceso queríamos recordarte algo:",
   },
 
   { kind: "day", id: "d3", label: "Día 3" },
   {
     kind: "message",
-    id: "m8",
+    id: "m3",
     from: "received",
-    text: "Primeras sesiones completadas ✅ Ya notamos mejor técnica y más constancia. Vas en la línea correcta.",
+    text: "El problema nunca fue tu disciplina.",
+  },
+  {
+    kind: "message",
+    id: "m4",
+    from: "received",
+    text: "El problema era intentar avanzar sin un sistema diseñado para medir y ajustar tu evolución.",
   },
 
   { kind: "day", id: "d5", label: "Día 5" },
   {
     kind: "message",
-    id: "m9",
+    id: "m5",
     from: "received",
-    text: "[Nombre], en solo unos días ya hay estructura, dirección y datos que lo confirman. Imagina esto sostenido en el tiempo.",
+    text: "Si quieres conocer cómo sería entrenar con una estructura personalizada, este es el siguiente paso:",
   },
   {
     kind: "message",
-    id: "m10",
+    id: "m6",
     from: "received",
-    text: "Este es el momento de dar el paso. Tu plan completo te está esperando 👇",
+    text: "Tu Evaluación Estratégica.",
   },
 ]
 
