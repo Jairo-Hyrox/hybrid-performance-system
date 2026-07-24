@@ -1,7 +1,6 @@
-import Image from "next/image"
 import { FadeIn } from "@/components/fade-in"
 import { ViewportVideo } from "@/components/viewport-video"
-import { VIDEOS, POSTERS, MARCA } from "@/lib/media"
+import { VIDEOS, POSTERS } from "@/lib/media"
 
 const STEPS = [
   { n: 1, text: "Realizas tu Evaluación Estratégica." },
@@ -13,18 +12,6 @@ const STEPS = [
 export function HowItWorksSection() {
   return (
     <section className="relative overflow-hidden border-t border-border py-20 md:py-32">
-      {/* Marca de agua sutil detrás del timeline */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.05]">
-        <Image
-          src={MARCA.logo || "/placeholder.svg"}
-          alt=""
-          aria-hidden="true"
-          width={900}
-          height={300}
-          className="w-[80%] max-w-3xl object-contain"
-        />
-      </div>
-
       <div className="relative mx-auto max-w-6xl px-5 md:px-8">
         <FadeIn>
           <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Cómo funciona</p>
