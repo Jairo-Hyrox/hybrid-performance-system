@@ -2,6 +2,7 @@ export const VIDEOS = {
   hero: "https://1pejw2ewpeqbv5cx.public.blob.vercel-storage.com/lv_7655512854933638420_20260712221508.mp4",
   outdoor: "https://s5ihgdgqdulzxrhj.public.blob.vercel-storage.com/_278196110.mp4",
   metodo: "https://j1rdckfjxurd6snm.public.blob.vercel-storage.com/lv_0_20260712232043.mp4",
+  comunidad: "https://rrrlv5zxj6smof2i.public.blob.vercel-storage.com/REEL-TRIO-HYROX.mp4",
 } as const
 
 export const POSTERS = {
