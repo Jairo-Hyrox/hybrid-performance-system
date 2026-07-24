@@ -1,0 +1,111 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Tokens de marca — Hybrid Performance System */
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-border-strong: var(--border-strong);
+  --color-body: var(--body);
+  --color-volt: var(--volt);
+  --color-volt-hover: var(--volt-hover);
+  --color-volt-foreground: var(--volt-foreground);
+  --color-success: var(--success);
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-archivo), system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Base */
+  --background: #0a0a0a;
+  --surface: #141414;
+  --surface-alt: #1c1c1c;
+  --border: #262626;
+  --border-strong: #3a3a3a;
+
+  /* Texto */
+  --foreground: #fafafa;
+  --body: #d4d4d4;
+  --muted-foreground: #8a8a8a;
+
+  /* Acento volt */
+  --volt: #d7ff00;
+  --volt-hover: #c2e600;
+  --volt-foreground: #0a0a0a;
+
+  --success: #4ade80;
+
+  /* Mapeos shadcn (interfaz oscura) */
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface);
+  --popover-foreground: var(--foreground);
+  --primary: var(--volt);
+  --primary-foreground: var(--volt-foreground);
+  --secondary: var(--surface-alt);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface-alt);
+  --accent: var(--surface-alt);
+  --accent-foreground: var(--foreground);
+  --destructive: #ef4444;
+  --input: var(--border-strong);
+  --ring: var(--volt);
+
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-body font-sans antialiased;
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-foreground;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
