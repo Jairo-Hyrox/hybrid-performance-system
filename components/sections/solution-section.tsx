@@ -1,5 +1,5 @@
 import { FadeIn } from "@/components/fade-in"
-import { ViewportVideo } from "@/components/viewport-video"
+import { ClickToPlayVideo } from "@/components/click-to-play-video"
 import { VIDEOS } from "@/lib/media"
 import { ClipboardCheck, Stethoscope, UserCog, Activity, CalendarClock, Users } from "lucide-react"
 
@@ -28,7 +28,11 @@ export function SolutionSection() {
 
         <FadeIn delay={120}>
           <div className="mt-12">
-            <ViewportVideo src={VIDEOS.laSolucion} className="aspect-video max-w-4xl" />
+            <ClickToPlayVideo
+              src={VIDEOS.laSolucion}
+              label="La solución en acción"
+              className="aspect-video max-w-4xl"
+            />
           </div>
         </FadeIn>
 
