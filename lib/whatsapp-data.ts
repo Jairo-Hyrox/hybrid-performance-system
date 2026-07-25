@@ -40,9 +40,9 @@ export type WhatsAppItem =
       label: string
     }
 
-// Secuencia de seguimiento (solo mensajes del coach) distribuida por días.
+// Conversación en vivo continua: SOLO mensajes del coach (burbujas recibidas),
+// sin separadores de día ni respuestas del cliente.
 export const WHATSAPP_SCRIPT: WhatsAppItem[] = [
-  { kind: "day", id: "d1", label: "Día 1" },
   {
     kind: "message",
     id: "m1",
@@ -55,8 +55,6 @@ export const WHATSAPP_SCRIPT: WhatsAppItem[] = [
     from: "received",
     text: "Antes de cerrar tu proceso queríamos recordarte algo:",
   },
-
-  { kind: "day", id: "d3", label: "Día 3" },
   {
     kind: "message",
     id: "m3",
@@ -69,8 +67,6 @@ export const WHATSAPP_SCRIPT: WhatsAppItem[] = [
     from: "received",
     text: "El problema era intentar avanzar sin un sistema diseñado para medir y ajustar tu evolución.",
   },
-
-  { kind: "day", id: "d5", label: "Día 5" },
   {
     kind: "message",
     id: "m5",

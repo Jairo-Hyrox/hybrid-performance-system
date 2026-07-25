@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ArrowRight, Check } from "lucide-react"
 import { FadeIn } from "@/components/fade-in"
 import { ClickToPlayVideo } from "@/components/click-to-play-video"
-import { VIDEOS, POSTERS } from "@/lib/media"
+import { VIDEOS } from "@/lib/media"
 
 // Experiencia 4 — Página de Oferta (Hybrid Performance System™).
 // Sin logo de Innovatraining. El CTA "EMPIEZO" lleva a /confirmacion.
@@ -42,9 +42,8 @@ export function OfertaExperience() {
         <div className="mx-auto max-w-4xl">
           <FadeIn>
             <ClickToPlayVideo
-              src={VIDEOS.metodo}
-              poster={POSTERS.metodo}
-              label="El método"
+              src={VIDEOS.oferta}
+              label="Hybrid Performance System™"
               className="aspect-[9/16] max-w-sm md:aspect-square md:max-w-xl"
             />
           </FadeIn>

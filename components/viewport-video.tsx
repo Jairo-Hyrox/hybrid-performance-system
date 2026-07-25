@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 interface ViewportVideoProps {
   src: string
-  poster: string
+  poster?: string
   className?: string
 }
 
@@ -55,7 +55,11 @@ export function ViewportVideo({ src, poster, className }: ViewportVideoProps) {
       )}
     >
       {reduced ? (
-        <img src={poster || "/placeholder.svg"} alt="" className="h-full w-full object-cover" />
+        poster ? (
+          <img src={poster || "/placeholder.svg"} alt="" className="h-full w-full object-cover" />
+        ) : (
+          <video src={src} muted playsInline preload="metadata" className="h-full w-full object-cover" />
+        )
       ) : (
         <video
           ref={videoRef}

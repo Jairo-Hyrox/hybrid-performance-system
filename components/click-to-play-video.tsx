@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 
 interface ClickToPlayVideoProps {
   src: string
-  poster: string
+  poster?: string
   label?: string
   className?: string
 }
@@ -44,11 +44,13 @@ export function ClickToPlayVideo({ src, poster, label, className }: ClickToPlayV
           className="group absolute inset-0 flex h-full w-full items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-volt"
           aria-label={label ? `Reproducir video: ${label}` : "Reproducir video"}
         >
-          <img
-            src={poster || "/placeholder.svg"}
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover opacity-70 transition-opacity duration-300 group-hover:opacity-90"
-          />
+          {poster ? (
+            <img
+              src={poster || "/placeholder.svg"}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover opacity-70 transition-opacity duration-300 group-hover:opacity-90"
+            />
+          ) : null}
           <span className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-background/30" />
           <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-volt text-volt-foreground shadow-lg transition-transform duration-300 group-hover:scale-110">
             <Play className="ml-1 h-7 w-7 fill-current" />
