@@ -15,7 +15,14 @@ import {
   type QuizOption,
 } from "@/lib/quiz-data"
 
-type Phase = "intro" | "question" | "loading" | "result"
+type Phase = "intro" | "question" | "form" | "loading" | "result"
+
+type LeadData = {
+  nombre: string
+  apellido: string
+  email: string
+  whatsapp: string
+}
 
 const AUTO_ADVANCE_MS = 400
 
@@ -23,6 +30,7 @@ export function QuizExperience() {
   const [phase, setPhase] = useState<Phase>("intro")
   const [step, setStep] = useState(0) // índice de pregunta activa
   const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [lead, setLead] = useState<LeadData | null>(null) // datos capturados en el formulario
   const [pending, setPending] = useState<string | null>(null) // opción recién seleccionada
   const [loadingStage, setLoadingStage] = useState(0)
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
@@ -54,9 +62,22 @@ export function QuizExperience() {
       if (step < QUIZ_QUESTIONS.length - 1) {
         setStep((s) => s + 1)
       } else {
-        beginLoading()
+        // Tras la última pregunta, capturamos los datos antes del resultado.
+        setPhase("form")
       }
     }, AUTO_ADVANCE_MS)
+  }
+
+  function submitLead(data: LeadData) {
+    setLead(data)
+    try {
+      // El primer nombre alimenta [Nombre] en la simulación de WhatsApp.
+      sessionStorage.setItem("hps_nombre", data.nombre)
+      sessionStorage.setItem("hps_lead", JSON.stringify(data))
+    } catch {
+      // sessionStorage puede no estar disponible; el flujo continúa igual.
+    }
+    beginLoading()
   }
 
   function goBack() {
@@ -101,6 +122,8 @@ export function QuizExperience() {
             onBack={goBack}
           />
         )}
+
+        {phase === "form" && <LeadFormView onSubmit={submitLead} />}
 
         {phase === "loading" && <LoadingView stage={loadingStage} />}
 
@@ -215,6 +238,120 @@ function QuestionView({
             )
           })}
         </div>
+      </div>
+    </div>
+  )
+}
+
+/* ---------------- Formulario de captura ---------------- */
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+function LeadFormView({ onSubmit }: { onSubmit: (data: LeadData) => void }) {
+  const [values, setValues] = useState<LeadData>({
+    nombre: "",
+    apellido: "",
+    email: "",
+    whatsapp: "",
+  })
+  const [errors, setErrors] = useState<Partial<Record<keyof LeadData, string>>>({})
+
+  function update(field: keyof LeadData, value: string) {
+    setValues((prev) => ({ ...prev, [field]: value }))
+    setErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev))
+  }
+
+  function validate(data: LeadData) {
+    const next: Partial<Record<keyof LeadData, string>> = {}
+    if (!data.nombre.trim()) next.nombre = "Ingresa tu nombre."
+    if (!data.apellido.trim()) next.apellido = "Ingresa tu apellido."
+    if (!data.email.trim()) next.email = "Ingresa tu email."
+    else if (!EMAIL_RE.test(data.email.trim())) next.email = "Ingresa un email válido."
+    if (!data.whatsapp.trim()) next.whatsapp = "Ingresa tu WhatsApp."
+    return next
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    const trimmed: LeadData = {
+      nombre: values.nombre.trim(),
+      apellido: values.apellido.trim(),
+      email: values.email.trim(),
+      whatsapp: values.whatsapp.trim(),
+    }
+    const found = validate(trimmed)
+    if (Object.keys(found).length > 0) {
+      setErrors(found)
+      return
+    }
+    onSubmit(trimmed)
+  }
+
+  const fields: {
+    id: keyof LeadData
+    label: string
+    type: string
+    inputMode?: "email" | "numeric"
+    autoComplete?: string
+  }[] = [
+    { id: "nombre", label: "Nombre", type: "text", autoComplete: "given-name" },
+    { id: "apellido", label: "Apellido", type: "text", autoComplete: "family-name" },
+    { id: "email", label: "Email", type: "email", inputMode: "email", autoComplete: "email" },
+    { id: "whatsapp", label: "WhatsApp", type: "tel", inputMode: "numeric", autoComplete: "tel" },
+  ]
+
+  return (
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="rounded-2xl border border-border bg-surface/60 p-7 backdrop-blur-sm sm:p-10">
+        <p className="text-center font-mono text-xs uppercase tracking-[0.3em] text-volt">Último paso</p>
+        <h2 className="mt-4 text-balance text-center font-display text-2xl font-extrabold uppercase leading-tight tracking-tight text-foreground break-words sm:text-3xl">
+          Tu diagnóstico está listo. ¿A dónde te lo enviamos?
+        </h2>
+
+        <form onSubmit={handleSubmit} noValidate className="mt-8 flex flex-col gap-4">
+          {fields.map((field) => (
+            <div key={field.id} className="flex flex-col gap-1.5">
+              <label
+                htmlFor={`lead-${field.id}`}
+                className="font-mono text-xs uppercase tracking-widest text-muted-foreground"
+              >
+                {field.label}
+              </label>
+              <input
+                id={`lead-${field.id}`}
+                name={field.id}
+                type={field.type}
+                inputMode={field.inputMode}
+                autoComplete={field.autoComplete}
+                value={values[field.id]}
+                onChange={(e) => {
+                  const raw = e.target.value
+                  // WhatsApp: solo dígitos.
+                  update(field.id, field.id === "whatsapp" ? raw.replace(/[^\d]/g, "") : raw)
+                }}
+                aria-invalid={errors[field.id] ? true : undefined}
+                aria-describedby={errors[field.id] ? `lead-${field.id}-error` : undefined}
+                className={cn(
+                  "w-full rounded-lg border bg-background/60 px-4 py-3 text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus-visible:border-volt focus-visible:ring-2 focus-visible:ring-volt/40",
+                  errors[field.id] ? "border-destructive" : "border-border",
+                )}
+              />
+              {errors[field.id] && (
+                <span id={`lead-${field.id}-error`} className="font-mono text-xs text-destructive">
+                  {errors[field.id]}
+                </span>
+              )}
+            </div>
+          ))}
+
+          <button
+            type="submit"
+            className="group mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-volt px-8 py-4 font-display text-base font-bold uppercase tracking-widest text-volt-foreground transition-all duration-300 hover:bg-volt-hover hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-volt focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            Ver mi diagnóstico
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </button>
+        </form>
       </div>
     </div>
   )
