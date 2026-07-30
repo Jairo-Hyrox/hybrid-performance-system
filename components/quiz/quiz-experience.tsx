@@ -28,7 +28,7 @@ const AUTO_ADVANCE_MS = 400
 
 // Google Apps Script Web App que recibe los leads del formulario.
 const SHEETS_ENDPOINT =
-  "https://script.google.com/macros/s/AKfycbwiRhxdxVYuzmTw4FG59tbJFScA3NHPSvYJ85cU1OBfTH2eHAfLH3tCCTu0MeUwumDm/exec"
+  "https://script.google.com/macros/s/AKfycbyIMIdj8tfD2w794s1uOlQ2l2kaIrozLhmZO8kasEYr8N5lha9MmYC3cCMtJCZe41E-/exec"
 
 declare global {
   interface Window {
