@@ -26,6 +26,16 @@ type LeadData = {
 
 const AUTO_ADVANCE_MS = 400
 
+// Google Apps Script Web App que recibe los leads del formulario.
+const SHEETS_ENDPOINT =
+  "https://script.google.com/macros/s/AKfycbwiRhxdxVYuzmTw4FG59tbJFScA3NHPSvYJ85cU1OBfTH2eHAfLH3tCCTu0MeUwumDm/exec"
+
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void
+  }
+}
+
 export function QuizExperience() {
   const [phase, setPhase] = useState<Phase>("intro")
   const [step, setStep] = useState(0) // índice de pregunta activa
@@ -68,7 +78,7 @@ export function QuizExperience() {
     }, AUTO_ADVANCE_MS)
   }
 
-  function submitLead(data: LeadData) {
+  async function submitLead(data: LeadData) {
     setLead(data)
     try {
       // El primer nombre alimenta [Nombre] en la simulación de WhatsApp.
@@ -77,6 +87,26 @@ export function QuizExperience() {
     } catch {
       // sessionStorage puede no estar disponible; el flujo continúa igual.
     }
+
+    // Envío a Google Sheets. Nunca bloquea: si falla, igual continuamos.
+    try {
+      await fetch(SHEETS_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+    } catch {
+      // Fallo de red: ignoramos y seguimos al resultado.
+    }
+
+    // Meta Pixel: lead capturado con éxito.
+    try {
+      window.fbq?.("track", "Lead")
+    } catch {
+      // El píxel puede no haber cargado; no afecta el flujo.
+    }
+
     beginLoading()
   }
 
@@ -247,7 +277,7 @@ function QuestionView({
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-function LeadFormView({ onSubmit }: { onSubmit: (data: LeadData) => void }) {
+function LeadFormView({ onSubmit }: { onSubmit: (data: LeadData) => void | Promise<void> }) {
   const [values, setValues] = useState<LeadData>({
     nombre: "",
     apellido: "",
@@ -255,6 +285,7 @@ function LeadFormView({ onSubmit }: { onSubmit: (data: LeadData) => void }) {
     whatsapp: "",
   })
   const [errors, setErrors] = useState<Partial<Record<keyof LeadData, string>>>({})
+  const [submitting, setSubmitting] = useState(false)
 
   function update(field: keyof LeadData, value: string) {
     setValues((prev) => ({ ...prev, [field]: value }))
@@ -271,8 +302,9 @@ function LeadFormView({ onSubmit }: { onSubmit: (data: LeadData) => void }) {
     return next
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (submitting) return
     const trimmed: LeadData = {
       nombre: values.nombre.trim(),
       apellido: values.apellido.trim(),
@@ -284,7 +316,8 @@ function LeadFormView({ onSubmit }: { onSubmit: (data: LeadData) => void }) {
       setErrors(found)
       return
     }
-    onSubmit(trimmed)
+    setSubmitting(true)
+    await onSubmit(trimmed)
   }
 
   const fields: {
@@ -346,10 +379,21 @@ function LeadFormView({ onSubmit }: { onSubmit: (data: LeadData) => void }) {
 
           <button
             type="submit"
-            className="group mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-volt px-8 py-4 font-display text-base font-bold uppercase tracking-widest text-volt-foreground transition-all duration-300 hover:bg-volt-hover hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-volt focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            disabled={submitting}
+            aria-busy={submitting}
+            className="group mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-volt px-8 py-4 font-display text-base font-bold uppercase tracking-widest text-volt-foreground transition-all duration-300 hover:bg-volt-hover hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-volt focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-80 disabled:hover:scale-100"
           >
-            Ver mi diagnóstico
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            {submitting ? (
+              <>
+                Enviando&hellip;
+                <Loader2 className="h-4 w-4 animate-spin" />
+              </>
+            ) : (
+              <>
+                Ver mi diagnóstico
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </>
+            )}
           </button>
         </form>
       </div>
