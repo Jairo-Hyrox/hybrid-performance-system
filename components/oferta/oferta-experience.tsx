@@ -76,15 +76,22 @@ export function OfertaExperience() {
           <FadeIn>
             <div className="relative overflow-hidden rounded-2xl border border-border-strong bg-surface p-8 md:p-14">
               <span className="inline-flex items-center rounded-full bg-volt px-4 py-1.5 font-display text-xs font-bold uppercase tracking-widest text-volt-foreground">
-                50% de descuento
+                70% de descuento
               </span>
 
               <h2 className="mt-6 max-w-2xl text-balance font-display text-3xl font-bold uppercase leading-tight tracking-tight text-foreground break-words md:text-5xl">
                 Empieza con tu Evaluación Estratégica
               </h2>
 
+              <div className="mt-6 flex items-baseline gap-3">
+                <span className="font-display text-2xl font-bold text-muted-foreground line-through md:text-3xl">
+                  83 USD
+                </span>
+                <span className="font-display text-4xl font-extrabold text-volt md:text-5xl">25 USD</span>
+              </div>
+
               <p className="mt-6 max-w-2xl text-pretty text-lg text-body break-words md:text-xl">
-                Completa tu evaluación y accede con un 50% de descuento.
+                Completa la experiencia y accede a tu Evaluación Estratégica por 25 USD (70% de descuento).
               </p>
 
               <div className="mt-10">
