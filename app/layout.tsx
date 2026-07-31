@@ -20,9 +20,33 @@ const archivo = Archivo({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://hybrid-performance-system.vercel.app'),
   title: 'Hybrid Performance System™ | Innovatraining',
   description:
-    'Un sistema personalizado de entrenamiento híbrido diseñado para convertir tu esfuerzo en progreso medible. No necesitas otra rutina. Necesitas un sistema.',
+    'No necesitas otra rutina. Necesitas un sistema. Descubre tu diagnóstico de rendimiento HYROX.',
+  openGraph: {
+    title: 'Hybrid Performance System™ | Innovatraining',
+    description:
+      'No necesitas otra rutina. Necesitas un sistema. Descubre tu diagnóstico de rendimiento HYROX.',
+    type: 'website',
+    url: 'https://hybrid-performance-system.vercel.app',
+    siteName: 'Hybrid Performance System',
+    images: [
+      {
+        url: 'https://o3ah9pgynpmqhfi0.public.blob.vercel-storage.com/HYROX%20BANNER.png',
+        width: 1200,
+        height: 630,
+        alt: 'Hybrid Performance System',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hybrid Performance System™ | Innovatraining',
+    description:
+      'No necesitas otra rutina. Necesitas un sistema. Descubre tu diagnóstico de rendimiento HYROX.',
+    images: ['https://o3ah9pgynpmqhfi0.public.blob.vercel-storage.com/HYROX%20BANNER.png'],
+  },
   generator: 'v0.app',
 }
 

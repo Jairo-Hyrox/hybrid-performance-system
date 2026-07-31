@@ -25,17 +25,21 @@ export function SolutionSection() {
             Un sistema personalizado de entrenamiento híbrido diseñado para convertir tu esfuerzo en progreso medible.
           </p>
         </FadeIn>
+      </div>
 
-        <FadeIn delay={120}>
-          <div className="mt-12">
-            <ClickToPlayVideo
-              src={VIDEOS.laSolucion}
-              label="La solución en acción"
-              className="aspect-video max-w-4xl"
-            />
-          </div>
-        </FadeIn>
+      {/* Video a todo el ancho, horizontal 16:9, sin márgenes laterales. */}
+      <FadeIn delay={120}>
+        <div className="mt-12">
+          <ClickToPlayVideo
+            src={VIDEOS.laSolucion}
+            label="La solución en acción"
+            cover
+            className="aspect-video w-full max-w-none rounded-none border-x-0 md:max-w-none"
+          />
+        </div>
+      </FadeIn>
 
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
         <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {CARDS.map((card, i) => {
             const Icon = card.icon
