@@ -9,6 +9,8 @@ interface ClickToPlayVideoProps {
   poster?: string
   label?: string
   className?: string
+  /** Usa object-cover en vez de object-contain (para videos a todo el ancho). */
+  cover?: boolean
 }
 
 /**
@@ -16,7 +18,7 @@ interface ClickToPlayVideoProps {
  * Al hacer clic reproduce con controles y sonido (para videos con voz).
  * Lazy load: el <video> solo se monta al pulsar play.
  */
-export function ClickToPlayVideo({ src, poster, label, className }: ClickToPlayVideoProps) {
+export function ClickToPlayVideo({ src, poster, label, className, cover }: ClickToPlayVideoProps) {
   const [playing, setPlaying] = useState(false)
   const videoRef = useRef<HTMLVideoElement | null>(null)
 
@@ -35,7 +37,7 @@ export function ClickToPlayVideo({ src, poster, label, className }: ClickToPlayV
           controls
           playsInline
           autoPlay
-          className="h-full w-full object-contain"
+          className={cn("h-full w-full", cover ? "object-cover" : "object-contain")}
         />
       ) : (
         <button

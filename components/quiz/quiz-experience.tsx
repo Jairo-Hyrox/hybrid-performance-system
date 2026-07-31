@@ -5,7 +5,7 @@ import Link from "next/link"
 import { ArrowLeft, ArrowRight, Activity, Check, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ClickToPlayVideo } from "@/components/click-to-play-video"
-import { VIDEOS, POSTERS } from "@/lib/media"
+import { VIDEOS } from "@/lib/media"
 import { QuizProgress } from "@/components/quiz/quiz-progress"
 import {
   QUIZ_INTRO,
@@ -442,7 +442,6 @@ function ResultView() {
       <div className="mt-8">
         <ClickToPlayVideo
           src={VIDEOS.coach}
-          poster={POSTERS.coach}
           label="El método en 60 segundos"
         />
       </div>
