@@ -33,6 +33,7 @@ const SHEETS_ENDPOINT =
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void
+    ttq?: { track?: (...args: unknown[]) => void; [key: string]: unknown }
   }
 }
 
@@ -103,6 +104,13 @@ export function QuizExperience() {
     // Meta Pixel: lead capturado con éxito.
     try {
       window.fbq?.("track", "Lead")
+    } catch {
+      // El píxel puede no haber cargado; no afecta el flujo.
+    }
+
+    // TikTok Pixel: lead capturado con éxito.
+    try {
+      window.ttq && window.ttq.track?.("Lead")
     } catch {
       // El píxel puede no haber cargado; no afecta el flujo.
     }
