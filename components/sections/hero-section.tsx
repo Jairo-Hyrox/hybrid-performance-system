@@ -41,11 +41,11 @@ export function HeroSection() {
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         aria-hidden="true"
       />
-      {/* Overlay en degradado: limpio arriba, oscuro abajo donde va el texto */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background" />
+      {/* Overlay en degradado: negro 20% arriba a negro 60% abajo para legibilidad del texto */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60" />
 
       <div className="relative mx-auto flex w-full max-w-6xl flex-col items-start gap-6 px-5 pb-24 pt-32 md:px-8 md:pb-32 md:pt-40">
         <CertificationBadge />
