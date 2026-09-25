@@ -451,7 +451,7 @@ function ResultView() {
         <ClickToPlayVideo
           src={VIDEOS.coach}
           variant="cta"
-          label="Mira qué es Hyrox — 50 segundos"
+          label="Mira qué es Hyrox en 50 segundos"
           ariaLabel="Reproducir video sobre qué es Hyrox"
         />
       </div>
