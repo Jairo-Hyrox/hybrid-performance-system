@@ -10,8 +10,8 @@ export const VIDEOS = {
   coach: "https://2r4zssr7v8mrohpv.public.blob.vercel-storage.com/HYROX%20FINAL%20LANDING.mp4",
   // Página de Oferta.
   oferta: "https://t9mvejrlmgohzqsr.public.blob.vercel-storage.com/lv_7655512854933638420_20260712221508.mp4",
-  // Confirmación — video de comunidad (reel del trío HYROX).
-  comunidad: "https://rrrlv5zxj6smof2i.public.blob.vercel-storage.com/REEL-TRIO-HYROX.mp4",
+  // Confirmación — video de comunidad (reel vertical).
+  comunidad: "https://o3ah9pgynpmqhfi0.public.blob.vercel-storage.com/Vertical-CYicVWnkmyobfDbhBGRH4hAD4iUGml",
 } as const
 
 export const POSTERS = {
