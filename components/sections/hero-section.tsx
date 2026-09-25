@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect, useRef } from "react"
 import Image from "next/image"
 import { ShieldCheck } from "lucide-react"
 import { CtaButton } from "@/components/cta-button"
@@ -30,10 +33,21 @@ function CertificationBadge() {
 }
 
 export function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    v.muted = true
+    v.defaultMuted = true
+    v.play().catch(() => {})
+  }, [])
+
   return (
     <section className="relative flex min-h-[100svh] w-full items-center overflow-hidden">
       {/* Video de fondo — único con autoplay */}
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         src={VIDEOS.hero}
         poster={POSTERS.hero}
