@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Play } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -11,6 +11,14 @@ interface ClickToPlayVideoProps {
   className?: string
   /** Usa object-cover en vez de object-contain (para videos a todo el ancho). */
   cover?: boolean
+  /**
+   * Portada tipo llamada a la acción: botón de play grande centrado,
+   * subtítulo debajo y velo oscuro al 45%. Sin autoPlay: el video
+   * arranca vía ref al pulsar la capa.
+   */
+  variant?: "default" | "cta"
+  /** aria-label del botón de la portada. */
+  ariaLabel?: string
 }
 
 /**
@@ -18,9 +26,16 @@ interface ClickToPlayVideoProps {
  * Al hacer clic reproduce con controles y sonido (para videos con voz).
  * Lazy load: el <video> solo se monta al pulsar play.
  */
-export function ClickToPlayVideo({ src, poster, label, className, cover }: ClickToPlayVideoProps) {
+export function ClickToPlayVideo({ src, poster, label, className, cover, variant = "default", ariaLabel }: ClickToPlayVideoProps) {
   const [playing, setPlaying] = useState(false)
   const videoRef = useRef<HTMLVideoElement | null>(null)
+  const isCta = variant === "cta"
+
+  useEffect(() => {
+    if (playing && isCta) {
+      videoRef.current?.play().catch(() => {})
+    }
+  }, [playing, isCta])
 
   return (
     <div
@@ -36,9 +51,34 @@ export function ClickToPlayVideo({ src, poster, label, className, cover }: Click
           poster={poster}
           controls
           playsInline
-          autoPlay
+          autoPlay={!isCta}
+          preload={isCta ? "metadata" : undefined}
           className={cn("h-full w-full", cover ? "object-cover" : "object-contain")}
         />
+      ) : isCta ? (
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          className="group absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-4 px-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-volt"
+          aria-label={ariaLabel ?? "Reproducir video"}
+        >
+          {poster ? (
+            <img
+              src={poster || "/placeholder.svg"}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : null}
+          <span className="absolute inset-0 bg-black/45" />
+          <span className="relative flex h-[72px] w-[72px] items-center justify-center rounded-full bg-volt text-volt-foreground shadow-xl transition-transform duration-300 group-hover:scale-110 md:h-[88px] md:w-[88px]">
+            <Play className="ml-1 h-8 w-8 fill-current md:h-10 md:w-10" />
+          </span>
+          {label ? (
+            <span className="relative max-w-xs text-balance text-center text-base font-semibold text-white">
+              {label}
+            </span>
+          ) : null}
+        </button>
       ) : (
         <button
           type="button"
