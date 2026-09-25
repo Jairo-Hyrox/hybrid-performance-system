@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { ArrowRight, Check, Play } from "lucide-react"
+import { useEffect, useRef } from "react"
+import { ArrowRight, Check } from "lucide-react"
 import { FadeIn } from "@/components/fade-in"
 import { VIDEOS } from "@/lib/media"
 
@@ -96,42 +96,38 @@ export function ConfirmacionExperience() {
 }
 
 /**
- * Video de comunidad: se reproduce CON audio. Los navegadores bloquean el
- * autoplay con sonido, así que arranca con un botón de play (gesto del
- * usuario). No lleva atributo muted. object-contain para no deformar el reel
- * vertical. Card centrada con ancho máximo md.
+ * Video de comunidad vertical (9:16). Autoplay silenciado con el mismo arreglo
+ * del hero: un ref con useEffect que fuerza muted/defaultMuted y play() para que
+ * los navegadores móviles no bloqueen el autoplay. object-contain para mostrar
+ * el reel vertical completo sin recortes. Card centrada con ancho máximo md.
  */
 function ComunidadVideo() {
-  const [playing, setPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    v.muted = true
+    v.defaultMuted = true
+    v.play().catch(() => {})
+  }, [])
 
   return (
     <figure className="w-full max-w-md">
       <div className="relative aspect-[9/16] overflow-hidden rounded-2xl border border-border bg-black">
-        {playing ? (
-          <video
-            src={VIDEOS.comunidad}
-            controls
-            loop
-            playsInline
-            autoPlay
-            className="h-full w-full object-contain"
-          />
-        ) : (
-          <button
-            type="button"
-            onClick={() => setPlaying(true)}
-            className="group absolute inset-0 flex h-full w-full items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-volt"
-            aria-label="Reproducir video con audio: La comunidad HYROX"
-          >
-            <span className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/10 to-background/30" />
-            <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-volt text-volt-foreground shadow-lg transition-transform duration-300 group-hover:scale-110">
-              <Play className="ml-1 h-7 w-7 fill-current" />
-            </span>
-          </button>
-        )}
+        <video
+          ref={videoRef}
+          src={VIDEOS.comunidad}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="h-full w-full object-contain"
+        />
       </div>
       <figcaption className="mt-3 text-center font-display text-sm font-bold uppercase tracking-widest text-body">
-        La comunidad HYROX
+        Comunidad INNOVA
       </figcaption>
     </figure>
   )
