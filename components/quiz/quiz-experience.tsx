@@ -450,7 +450,9 @@ function ResultView() {
       <div className="mt-8">
         <ClickToPlayVideo
           src={VIDEOS.coach}
-          label="El método en 60 segundos"
+          variant="cta"
+          label="Mira qué es Hyrox — 50 segundos"
+          ariaLabel="Reproducir video sobre qué es Hyrox"
         />
       </div>
 
