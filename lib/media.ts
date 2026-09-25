@@ -1,7 +1,7 @@
 // Cada sección lleva SU video y ningún otro. No se reutilizan entre secciones.
 export const VIDEOS = {
   // Hero de la landing.
-  hero: "https://o3ah9pgynpmqhfi0.public.blob.vercel-storage.com/Horizontal-zFkTruiFURBINnvL0gGZHiYSoCNoKk",
+  hero: "https://o3ah9pgynpmqhfi0.public.blob.vercel-storage.com/BUCLE-Uvg13LBZrAflJ8v1R4xGvvzIGUMVoc",
   // Sección "Cómo Funciona".
   comoFunciona: "https://s5ihgdgqdulzxrhj.public.blob.vercel-storage.com/_278196110.mp4",
   // Sección "La Solución" (versión editada).
