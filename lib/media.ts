@@ -7,7 +7,7 @@ export const VIDEOS = {
   // Sección "La Solución" (versión editada).
   laSolucion: "https://3ntnsenl6hixyuks.public.blob.vercel-storage.com/REEL%20HYROX%202%20INTRO.mp4",
   // Video del coach — ÚNICAMENTE en la pantalla de resultado del quiz.
-  coach: "https://2r4zssr7v8mrohpv.public.blob.vercel-storage.com/HYROX%20FINAL%20LANDING.mp4",
+  coach: "https://o3ah9pgynpmqhfi0.public.blob.vercel-storage.com/Metodo-Hyrox-uUJmvuVNjK8YKSxz7X2IsuC5Ssn3cK",
   // Página de Oferta.
   oferta: "https://t9mvejrlmgohzqsr.public.blob.vercel-storage.com/lv_7655512854933638420_20260712221508.mp4",
   // Confirmación — video de comunidad (reel vertical).
