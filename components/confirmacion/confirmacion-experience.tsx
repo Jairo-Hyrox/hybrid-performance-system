@@ -1,6 +1,3 @@
-"use client"
-
-import { useEffect, useRef } from "react"
 import { ArrowRight, Check } from "lucide-react"
 import { FadeIn } from "@/components/fade-in"
 import { VIDEOS } from "@/lib/media"
@@ -96,33 +93,21 @@ export function ConfirmacionExperience() {
 }
 
 /**
- * Video de comunidad vertical (9:16). Autoplay silenciado con el mismo arreglo
- * del hero: un ref con useEffect que fuerza muted/defaultMuted y play() para que
- * los navegadores móviles no bloqueen el autoplay. object-contain para mostrar
- * el reel vertical completo sin recortes. Card centrada con ancho máximo md.
+ * Video de comunidad vertical (9:16). Reproducción manual con sonido: el usuario
+ * le da play con los controles nativos. Tiene música de fondo que debe oírse, por
+ * eso no lleva muted ni autoplay. object-contain para mostrar el reel vertical
+ * completo sin recortes. Card centrada con ancho máximo md.
  */
 function ComunidadVideo() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    const v = videoRef.current
-    if (!v) return
-    v.muted = true
-    v.defaultMuted = true
-    v.play().catch(() => {})
-  }, [])
-
   return (
     <figure className="w-full max-w-md">
       <div className="relative aspect-[9/16] overflow-hidden rounded-2xl border border-border bg-black">
         <video
-          ref={videoRef}
           src={VIDEOS.comunidad}
-          autoPlay
-          muted
+          controls
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           className="h-full w-full object-contain"
         />
       </div>
