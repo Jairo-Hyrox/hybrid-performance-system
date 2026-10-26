@@ -4,7 +4,7 @@ import { Archivo, Inter } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 
-const META_PIXEL_ID = '1413038453969536'
+const META_PIXEL_ID = '2573085406473700'
 
 const inter = Inter({
   subsets: ['latin'],
