@@ -89,13 +89,26 @@ export function QuizExperience() {
       // sessionStorage puede no estar disponible; el flujo continúa igual.
     }
 
+    // Origen del lead (anuncio): utm_content guardado al entrar a la landing.
+    let utm: Record<string, string> = {}
+    try {
+      utm = JSON.parse(sessionStorage.getItem("hps_utm") || "{}")
+    } catch {
+      // Sin utm disponible: el lead se registra como "directo".
+    }
+
     // Envío a Google Sheets. Nunca bloquea: si falla, igual continuamos.
     try {
       await fetch(SHEETS_ENDPOINT, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          anuncio: utm.utm_content || "directo",
+          campana: utm.utm_campaign || "",
+          origen: utm.utm_source || "",
+        }),
       })
     } catch {
       // Fallo de red: ignoramos y seguimos al resultado.
